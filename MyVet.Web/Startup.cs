@@ -6,9 +6,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MyVet.Web.Data;
+using MyVet.Web.Data.Entities;
+using MyVet.Web.Helpers;
 
 namespace MyVet.Web
 {
@@ -23,6 +28,10 @@ namespace MyVet.Web
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
+
+
+
+
         {
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -31,6 +40,29 @@ namespace MyVet.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddIdentity<User, IdentityRole>(cfg =>
+            {
+                cfg.User.RequireUniqueEmail = true;
+                cfg.Password.RequireDigit = false;
+                cfg.Password.RequiredUniqueChars = 0;
+                cfg.Password.RequireLowercase = false;
+                cfg.Password.RequireNonAlphanumeric = false;
+                cfg.Password.RequireUppercase = false;
+            }).AddEntityFrameworkStores<DataContext>();
+
+
+            services.AddDbContext<DataContext>(cfg =>
+            {
+                cfg.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
+
+            //--------------Inteccion de Clases
+            //AddTransient Solo la inyecta una vez y la borra
+            services.AddTransient<SeedDb>();
+            //AddScoped Lo inyecta todas la veces que se llame pero crea una nueva instacia, Nuevo objeto
+            services.AddScoped<IUserHelper, UserHelper>();
+            //AddSingleton Lo inyecta una vez pero lo deja vivo en el ciclo de vida de ejecucion del proyecto
+           // services.AddSingleton<UserHelper>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -51,6 +83,7 @@ namespace MyVet.Web
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
