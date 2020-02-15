@@ -31,8 +31,10 @@ namespace MyVet.Web.Data
             await CheckManagerAsync(manager);
             await CheckPetsAsync();
             await CheckAgendasAsync();
+            await CheckHistoryAsync();
         }
 
+     
         private async Task CheckRoles()
         {
             await _userHelper.CheckRoleAsync("Admin");
@@ -98,6 +100,17 @@ namespace MyVet.Web.Data
             {
                 _dataContext.PetTypes.Add(new PetType { Name = "Perro" });
                 _dataContext.PetTypes.Add(new PetType { Name = "Gato" });
+                await _dataContext.SaveChangesAsync();
+            }
+        }
+
+        private async Task CheckHistoryAsync()
+        {
+            if (!_dataContext.Histories.Any())
+            {
+                var ServiceType = _dataContext.ServiceTypes.FirstOrDefault();
+                var Pet = _dataContext.Pets.FirstOrDefault();
+                _dataContext.Histories.Add(new History { Description = "Vacunacion y desparacitación inicial", Date = DateTime.Now,ServiceType=ServiceType,Pet=Pet});
                 await _dataContext.SaveChangesAsync();
             }
         }

@@ -4,11 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MyVet.Web.Data.Entities
 {
-    public class History : IEntity
+    public class History 
     {
         public int Id { get; set; }
-
-       
 
         [Display(Name = "Description*")]
         [MaxLength(100, ErrorMessage = "The {0} field can not have more than {1} characters.")]

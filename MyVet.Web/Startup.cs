@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyVet.Web.Data;
 using MyVet.Web.Data.Entities;
+using MyVet.Web.Helper;
 using MyVet.Web.Helpers;
 
 namespace MyVet.Web
@@ -62,7 +63,14 @@ namespace MyVet.Web
             //AddScoped Lo inyecta todas la veces que se llame pero crea una nueva instacia, Nuevo objeto
             services.AddScoped<IUserHelper, UserHelper>();
             //AddSingleton Lo inyecta una vez pero lo deja vivo en el ciclo de vida de ejecucion del proyecto
-           // services.AddSingleton<UserHelper>();
+            // services.AddSingleton<UserHelper>();
+            services.AddScoped<ICombosHelper, CombosHelper>();
+            services.AddScoped<IConverterHelper, ConverterHelper>();
+            services.AddScoped<IImageHelper, ImageHelper>();
+          
+
+
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
