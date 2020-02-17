@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace MyVet.Common.Models
 {
@@ -10,7 +7,7 @@ namespace MyVet.Common.Models
 
         [Required]
         [EmailAddress]
-        public String Email { get; set; }
+        public string Email { get; set; }
 
         public EmailRequest()
         {

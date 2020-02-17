@@ -36,7 +36,7 @@ namespace MyVet.Web.Data.Entities
         //TODO: replace the correct URL for the image
         public string ImageFullPath => string.IsNullOrEmpty(ImageUrl)
             ? null
-            : $"https://TDB.azurewebsites.net{ImageUrl.Substring(1)}";
+            : $"https://myvetwebdgv.azurewebsites.net{ImageUrl.Substring(1)}";
 
         public Owner Owner { get; set; }
         //relacion en la parte 1
