@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="MyVet.Prism.Views.PetPage"
+             Title="{Binding Title}">
+
+
+    <StackLayout
+        Padding="10">
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+        
+        <Image
+              Grid.Column="0"
+             Source="{Binding Pet.ImageUrl}"
+             HeightRequest="250"/>
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                
+            </Grid.RowDefinitions>
+            <Label
+                FontAttributes="Bold"
+                Grid.Column="0"
+                Grid.Row="0"
+                Text="Name"/>
+
+            <Label
+                Grid.Column="1"
+                Grid.Row="0"
+                Text="{Binding Pet.Name}"/>
+
+            <Label
+                FontAttributes="Bold"
+                Grid.Column="0"
+                Grid.Row="1"
+                Text="Race"/>
+
+            <Label
+                Grid.Column="1"
+                Grid.Row="1"
+                Text="{Binding Pet.Race}"/>
+
+            <Label
+                FontAttributes="Bold"
+                Grid.Column="0"
+                Grid.Row="2"
+                Text="Born"/>
+
+            <Label
+                Grid.Column="1"
+                Grid.Row="2"
+                Text="{Binding Pet.Born,StringFormat='{0:yyyy/MM/dd}'}"/>
+            <Label
+
+                FontAttributes="Bold"
+                Grid.Column="0"
+                Grid.Row="3"
+                Text="Pet Type"/>
+
+            <Label
+                Grid.Column="1"
+                Grid.Row="3"
+                Text="{Binding Pet.PetType}"/>
+            <Label
+                FontAttributes="Bold"
+                Grid.Column="0"
+                Grid.Row="4"
+                Text="Remarks"/>
+
+            <Label
+                Grid.Column="1"
+                Grid.Row="4"
+                Text="{Binding Pet.Remarks}"/>
+        </Grid>
+
+
+    </StackLayout>
+    
+  
+</ContentPage>

@@ -10,6 +10,7 @@ namespace MyVet.Common.Services
 {
     public class ApiService : IApiService
     {
+
         public async Task<Response> GetTokenAsync(
             string urlBase,
             string servicePrefix,
@@ -55,7 +56,7 @@ namespace MyVet.Common.Services
             }
         }
 
-        public async Task<Response> GetOwnerByEmail(
+        public async Task<Response> GetOwnerByEmailAsync(
             string urlBase,
             string servicePrefix,
             string controller,

@@ -28,9 +28,13 @@
         </ActivityIndicator>
 
         <Button
+            BorderRadius="23"
+            BackgroundColor="Navy"
             Command="{Binding LoginComand}"
+            HeightRequest="46"
             IsEnabled="{Binding IsEnable}"
-            Text="Login">
+            Text="Login"
+            TextColor="White">
 
         </Button>
 
