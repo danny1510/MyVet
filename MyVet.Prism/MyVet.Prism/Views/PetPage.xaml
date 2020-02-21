@@ -2,95 +2,111 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="MyVet.Prism.Views.PetPage"
              Title="{Binding Title}">
 
 
-    <StackLayout
-        Padding="10">
+    <ScrollView>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-        
-        <Image
-              Grid.Column="0"
-             Source="{Binding Pet.ImageUrl}"
-             HeightRequest="250"/>
-        </Grid>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+        <StackLayout
+            Padding="10">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                
-            </Grid.RowDefinitions>
-            <Label
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <ffimageloading:CachedImage
+                     HorizontalOptions="Center"
+                     VerticalOptions="Center"
+                     Grid.Column="0"
+                     Aspect="AspectFit"
+    	             Source="{Binding Pet.ImageUrl}"
+    	             LoadingPlaceholder= "LoaderImage"
+    	             ErrorPlaceholder= "ErrorImage"
+    	             CacheDuration= "50"
+    	             RetryCount= "3"
+    	             RetryDelay= "600"
+    	             DownsampleToViewSize = "true"
+                     HeightRequest="300"/>
+
+            </Grid>
+            
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+
+                </Grid.RowDefinitions>
+                <Label
                 FontAttributes="Bold"
                 Grid.Column="0"
                 Grid.Row="0"
                 Text="Name"/>
 
-            <Label
+                <Label
                 Grid.Column="1"
                 Grid.Row="0"
                 Text="{Binding Pet.Name}"/>
 
-            <Label
+                <Label
                 FontAttributes="Bold"
                 Grid.Column="0"
                 Grid.Row="1"
                 Text="Race"/>
 
-            <Label
+                <Label
                 Grid.Column="1"
                 Grid.Row="1"
                 Text="{Binding Pet.Race}"/>
 
-            <Label
+                <Label
                 FontAttributes="Bold"
                 Grid.Column="0"
                 Grid.Row="2"
                 Text="Born"/>
 
-            <Label
+                <Label
                 Grid.Column="1"
                 Grid.Row="2"
                 Text="{Binding Pet.Born,StringFormat='{0:yyyy/MM/dd}'}"/>
-            <Label
+                <Label
 
                 FontAttributes="Bold"
                 Grid.Column="0"
                 Grid.Row="3"
                 Text="Pet Type"/>
 
-            <Label
+                <Label
                 Grid.Column="1"
                 Grid.Row="3"
                 Text="{Binding Pet.PetType}"/>
-            <Label
+                <Label
                 FontAttributes="Bold"
                 Grid.Column="0"
                 Grid.Row="4"
                 Text="Remarks"/>
 
-            <Label
+                <Label
                 Grid.Column="1"
                 Grid.Row="4"
                 Text="{Binding Pet.Remarks}"/>
-        </Grid>
+            </Grid>
 
 
-    </StackLayout>
+        </StackLayout>
+
+    </ScrollView>
     
   
 </ContentPage>

@@ -12,6 +12,7 @@ namespace MyVet.Web.Controllers.API
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
     public class OwnersController : ControllerBase
     {
 
@@ -21,7 +22,6 @@ namespace MyVet.Web.Controllers.API
         {
             _dataContext = dataContext;
         }
-
 
         [HttpPost]
         [Route("GetOwnerByEmail")]

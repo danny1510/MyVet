@@ -1,9 +1,5 @@
 ﻿using MyVet.Common.Models;
-using Prism.Commands;
-using Prism.Mvvm;
 using Prism.Navigation;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -21,7 +17,8 @@ namespace MyVet.Prism.ViewModels
             Title = "Pets";
         }
 
-        public ObservableCollection<PetItemViewModel> Pets {
+        public ObservableCollection<PetItemViewModel> Pets
+        {
             get => _pets;
             set => SetProperty(ref _pets, value);
         }
@@ -36,15 +33,15 @@ namespace MyVet.Prism.ViewModels
                 Title = $"Pets of {_owner.FullName}";
                 Pets = new ObservableCollection<PetItemViewModel>
                     (_owner.Pets.Select(p => new PetItemViewModel(_navigationService)
-                    { 
-                     Born=p.Born,
-                     Histories=p.Histories,
-                     Id=p.Id,
-                     ImageUrl=p.ImageUrl,
-                     Name=p.Name,
-                     PetType=p.PetType,
-                     Race=p.Race,
-                     Remarks=p.Remarks
+                    {
+                        Born = p.Born,
+                        Histories = p.Histories,
+                        Id = p.Id,
+                        ImageUrl = p.ImageUrl,
+                        Name = p.Name,
+                        PetType = p.PetType,
+                        Race = p.Race,
+                        Remarks = p.Remarks
                     }).ToList());
             }
 

@@ -21,7 +21,7 @@ namespace MyVet.Prism.ViewModels
 
         private string _Password;
         private bool _IsRuuning ;
-        private bool _IsEnable;
+        private bool _IsEnabled;
         private DelegateCommand _LoginComand;
         private readonly INavigationService _navigationService;
         private readonly IApiService _apiService;
@@ -33,7 +33,7 @@ namespace MyVet.Prism.ViewModels
             _navigationService = navigationService;
             _apiService = apiService;
             Title = "Login";
-            _IsEnable = true;
+            _IsEnabled = true;
 
             //TODO:Delete this lineas
             Email="valenm@gmail.com";
@@ -56,8 +56,8 @@ namespace MyVet.Prism.ViewModels
 
         public bool IsEnable
         {
-            get => _IsEnable;
-            set => SetProperty(ref _IsEnable, value);
+            get => _IsEnabled;
+            set => SetProperty(ref _IsEnabled, value);
         }
 
         public DelegateCommand LoginComand =>
@@ -77,8 +77,20 @@ namespace MyVet.Prism.ViewModels
                 await App.Current.MainPage.DisplayAlert("Error", "You must enter an password", "Accept");
                 return;
             }
+
             IsEnable = false;
             IsRunning = true;
+
+            var url = App.Current.Resources["UrlAPI"].ToString();
+            var connection = await _apiService.CheckConnection(url);
+
+            if (!connection)
+            {
+                IsEnable = true;
+                IsRunning = false;
+                await App.Current.MainPage.DisplayAlert("Error", "Check the internet connection.", "Accept");
+                return;
+            }
 
             var request = new TokenRequest
             {
@@ -86,7 +98,6 @@ namespace MyVet.Prism.ViewModels
                 Username = Email
             };
 
-            var url = App.Current.Resources["UrlAPI"].ToString();
             var response = await _apiService.GetTokenAsync
                 (url, "Account", "/CreateToken", request);
 
@@ -100,19 +111,20 @@ namespace MyVet.Prism.ViewModels
                 return;
             }
 
-            var token = (TokenResponse)response.Result;
-            var response2 = await _apiService.GetOwnerByEmailAsync(url, "api", "/Owners/GetOwnerByEmail", "bearer", token.Token, Email);
+            var token = response.Result;
+            var response2 = await _apiService.GetOwnerByEmailAsync
+                (url, "api", "/Owners/GetOwnerByEmail", "bearer", token.Token, Email);
 
             if (!response.IsSuccess)
             {
                 IsEnable = true;
                 IsRunning = false;
-                await App.Current.MainPage.DisplayAlert("Error", "This user have a big problem,call support", "Accept");
+                await App.Current.MainPage.DisplayAlert("Error", $"{response.Message}"+". This user have a big problem,call support", "Accept");
                 Password = string.Empty;
                 return;
             }
 
-            var owner = (OwnerResponse)response2.Result;
+            var owner = response2.Result;
             var parameters = new NavigationParameters
             {
                 { "owner", owner }
@@ -124,17 +136,6 @@ namespace MyVet.Prism.ViewModels
             Password = string.Empty;
 
         }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
