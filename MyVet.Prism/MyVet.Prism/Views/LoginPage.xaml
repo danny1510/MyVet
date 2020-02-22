@@ -2,47 +2,66 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
+             xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="MyVet.Prism.Views.LoginPage"
              Title="{Binding Title}">
 
     <ScrollView>
-        <StackLayout Padding="10">
-            <Image
-                HeightRequest="230"
-                Source="logo.png"/>
+        <AbsoluteLayout>
 
-            <Label Text="Email"></Label>
-            <Entry
-            Keyboard="Email"
-            Placeholder="Enter your Email"
-            Text="{Binding Email}">
-            </Entry>
+            <StackLayout 
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+            	AbsoluteLayout.LayoutFlags="All"
+                Padding="10">
+                <Image
+                    HeightRequest="230"
+                    Source="logo.png"/>
 
-            <Label Text="Password"></Label>
-            <Entry
-            IsPassword="true"
-            Placeholder="Enter your password"
-            Text="{Binding Password}">
-            </Entry>
+                <Label Text="Email"></Label>
+                <Entry
+                    Keyboard="Email"
+                    Placeholder="Enter your Email"
+                    Text="{Binding Email}">
+                </Entry>
 
-            <ActivityIndicator
-            VerticalOptions="CenterAndExpand"
-            IsRunning="{Binding IsRunning}">
-            </ActivityIndicator>
+                <Label Text="Password"></Label>
+                <Entry
+                    IsPassword="true"
+                    Placeholder="Enter your password"
+                    Text="{Binding Password}">
+                </Entry>
 
-            <Button
-            BorderRadius="23"
-            BackgroundColor="Navy"
-            Command="{Binding LoginComand}"
-            HeightRequest="46"
-            IsEnabled="{Binding IsEnable}"
-            Text="Login"
-            TextColor="White">
+                <Button
+                    BorderRadius="23"
+                    BackgroundColor="Navy"
+                    Command="{Binding LoginComand}"
+                    HeightRequest="46"
+                    IsEnabled="{Binding IsEnable}"
+                    Text="Login"
+                    TextColor="White"
+                    VerticalOptions="EndAndExpand">
 
-            </Button>
+                </Button>
 
-        </StackLayout>
+            </StackLayout>
+            <busyindicator:SfBusyIndicator  
+                  
+                	AnimationType="Gear"
+                	AbsoluteLayout.LayoutBounds=".5,.5,.5,.5"
+                	AbsoluteLayout.LayoutFlags="All"
+                	BackgroundColor="Transparent"
+                	HorizontalOptions="Center"
+                	TextColor="#1d66ab"
+                	IsVisible="{Binding IsRunning}"
+                	Title="Loading..."
+                	VerticalOptions="Center"
+                	ViewBoxWidth="80"
+                	ViewBoxHeight="80" />
+
+
+        </AbsoluteLayout>
+        
     </ScrollView>
 
        
