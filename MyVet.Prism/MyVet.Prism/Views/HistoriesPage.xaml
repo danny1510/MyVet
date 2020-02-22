@@ -4,6 +4,7 @@
              xmlns:prism="http://prismlibrary.com"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="MyVet.Prism.Views.HistoriesPage"
+             IconImageSource="ic_list"
              Title="{Binding Title}">
 
     <StackLayout
@@ -11,7 +12,6 @@
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="48"/>
@@ -28,10 +28,6 @@
                 FontAttributes="Bold"
                 Grid.Column="1"
                 Text="Service Type"/>
-            <Label
-                FontAttributes="Bold"
-                Grid.Column="2"
-                Text="Description"/>
 
         </Grid>
 
@@ -41,36 +37,30 @@
                 <DataTemplate>
                     <ViewCell>
                         <Grid >
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SelectHistoryCommand}"/>
+                            </Grid.GestureRecognizers>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="48"/>
                             </Grid.ColumnDefinitions>
                             
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
                                 <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                               
                             </Grid.RowDefinitions>
 
                             <Label
                                 Grid.Column="0"
-                                Text="{Binding DateLocal, StringFormat='{0:yyyy/MM/dd}'}"
+                                Text="{Binding Date, StringFormat='{0:yyyy/MM/dd hh:mm}'}"
                                 />
                             <Label
                                 Grid.Column="1"
                                 Text="{Binding ServiceType}"
                                 />
                       
-                            <Label
-                                Grid.Column="2"
-                                Text="{Binding Description}"
-                                />
-                        
                             <Image
-                                Grid.Column="3"
+                                Grid.Column="2"
                                 WidthRequest="50"
                                 Source="ic_chevron_right"/>
 

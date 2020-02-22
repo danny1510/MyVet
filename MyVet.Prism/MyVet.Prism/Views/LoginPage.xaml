@@ -8,6 +8,10 @@
 
     <ScrollView>
         <StackLayout Padding="10">
+            <Image
+                HeightRequest="230"
+                Source="logo.png"/>
+
             <Label Text="Email"></Label>
             <Entry
             Keyboard="Email"

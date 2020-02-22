@@ -6,10 +6,8 @@
 	<Application.Resources>
 
         <ResourceDictionary>
-
             <!-- Parameters -->
             <x:String x:Key="UrlAPI">https://myvetwebdgv.azurewebsites.net</x:String>
-
         </ResourceDictionary>
 
 
