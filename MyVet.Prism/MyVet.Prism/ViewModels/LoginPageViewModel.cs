@@ -115,11 +115,11 @@ namespace MyVet.Prism.ViewModels
             var response2 = await _apiService.GetOwnerByEmailAsync
                 (url, "api", "/Owners/GetOwnerByEmail", "bearer", token.Token, Email);
 
-            if (!response.IsSuccess)
+            if (!response2.IsSuccess)
             {
                 IsEnable = true;
                 IsRunning = false;
-                await App.Current.MainPage.DisplayAlert("Error", $"{response.Message}"+". This user have a big problem,call support", "Accept");
+                await App.Current.MainPage.DisplayAlert("Error", $"{response2.Message}"+". This user have a big problem,call support", "Accept");
                 Password = string.Empty;
                 return;
             }

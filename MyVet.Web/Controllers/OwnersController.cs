@@ -21,21 +21,23 @@ namespace MyVet.Web.Controllers
         private readonly ICombosHelper _combosHelper;
         private readonly IConverterHelper _converterHelper;
         private readonly IImageHelper _imageHelper;
+        private readonly IMailHelper _mailHelper;
 
         public OwnersController(
             DataContext context,
             IUserHelper userhelper,
             ICombosHelper CombosHelper,
             IConverterHelper converterHelper,
-            IImageHelper imageHelper)
+            IImageHelper imageHelper,
+            IMailHelper mailHelper)
         {
             _dataContext = context;
             _userhelper = userhelper;
             _combosHelper = CombosHelper;
             _converterHelper = converterHelper;
             _imageHelper = imageHelper;
+            _mailHelper = mailHelper;
         }
-
 
         public IActionResult Index()
         {
@@ -43,7 +45,6 @@ namespace MyVet.Web.Controllers
                 .Include(o => o.User)
                 .Include(o => o.Pets));
         }
-
 
         public async Task<IActionResult> Details(int? id)
         {
@@ -67,12 +68,10 @@ namespace MyVet.Web.Controllers
             return View(owner);
         }
 
-
         public IActionResult Create()
         {
             return View();
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -106,6 +105,17 @@ namespace MyVet.Web.Controllers
                     try
                     {
                         await _dataContext.SaveChangesAsync();
+                        var myToken = await _userhelper.GenerateEmailConfirmationTokenAsync(user);
+                        var tokenLink = Url.Action("ConfirmEmail", "Account", new
+                        {
+                            userid = user.Id,
+                            token = myToken
+                        }, protocol: HttpContext.Request.Scheme);
+
+                        _mailHelper.SendMail(model.Username, "Email confirmation", $"<h1>Email Confirmation</h1>" +
+                            $"To allow the user, " +
+                            $"plase click in this link:</br></br><a href = \"{tokenLink}\">Confirm Email</a>");
+
                         return RedirectToAction(nameof(Index));
                     }
                     catch (Exception ex)
@@ -150,7 +160,6 @@ namespace MyVet.Web.Controllers
         }
 
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditUserViewModel model)
@@ -173,7 +182,6 @@ namespace MyVet.Web.Controllers
 
             return View(model);
         }
-
 
         // GET: Owners/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -201,7 +209,6 @@ namespace MyVet.Web.Controllers
             await _dataContext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
 
         private bool OwnerExists(int id)
         {
@@ -328,9 +335,30 @@ namespace MyVet.Web.Controllers
                 return NotFound();
             }
 
+            
+            DateTime timeUtc = DateTime.UtcNow;
+            try
+            {
+                TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+                timeUtc = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
+                Console.WriteLine("The date and time are {0} {1}.",
+                                  timeUtc,
+                                  cstZone.IsDaylightSavingTime(timeUtc) ?
+                                          cstZone.DaylightName : cstZone.StandardName);
+            }
+            catch (TimeZoneNotFoundException)
+            {
+                Console.WriteLine("The registry does not define the Central Standard Time zone.");
+            }
+            catch (InvalidTimeZoneException)
+            {
+                Console.WriteLine("Registry data on the Central Standard Time zone has been corrupted.");
+            }
+
+
             var model = new HistoryViewModel
             {
-                Date = DateTime.Now,
+                Date  = timeUtc,
                 PetId = pet.Id,
                 ServiceTypes = _combosHelper.GetComboServiceTypes(),
             };

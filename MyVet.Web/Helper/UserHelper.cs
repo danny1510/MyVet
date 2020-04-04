@@ -21,20 +21,7 @@ namespace MyVet.Web.Helpers
             _signInManager = signInManager;
         }
 
-        public async Task<SignInResult> LoginAsync(LoginViewModel model)
-        {
-            return await _signInManager.PasswordSignInAsync(
-                model.Username,
-                model.Password,
-                model.RememberMe,
-                false);
-        }
-
-        public async Task LogoutAsync()
-        {
-            await _signInManager.SignOutAsync();
-        }
-
+        #region User
         public async Task<IdentityResult> AddUserAsync(User user, string password)
         {
             return await _userManager.CreateAsync(user, password);
@@ -43,18 +30,6 @@ namespace MyVet.Web.Helpers
         public async Task AddUserToRoleAsync(User user, string roleName)
         {
             await _userManager.AddToRoleAsync(user, roleName);
-        }
-
-        public async Task CheckRoleAsync(string roleName)
-        {
-            var roleExists = await _roleManager.RoleExistsAsync(roleName);
-            if (!roleExists)
-            {
-                await _roleManager.CreateAsync(new IdentityRole
-                {
-                    Name = roleName
-                });
-            }
         }
 
         public async Task<User> GetUserByEmailAsync(string email)
@@ -85,14 +60,65 @@ namespace MyVet.Web.Helpers
             return await _userManager.UpdateAsync(user);
         }
 
+        public async Task<IdentityResult> ChangePasswordAsync(User user, string oldPassword, string newPassword)
+        {
+            return await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+        }
+
+        public async Task<IdentityResult> ConfirmEmailAsync(User user, string token)
+        {
+            return await _userManager.ConfirmEmailAsync(user, token);
+        }
+
+        public async Task<string> GenerateEmailConfirmationTokenAsync(User user)
+        {
+            return await _userManager.GenerateEmailConfirmationTokenAsync(user);
+        }
+
+        public async Task<User> GetUserByIdAsync(string userId)
+        {
+            return await _userManager.FindByIdAsync(userId);
+        }
+        #endregion
+
+        #region Role
+        public async Task CheckRoleAsync(string roleName)
+        {
+            var roleExists = await _roleManager.RoleExistsAsync(roleName);
+            if (!roleExists)
+            {
+                await _roleManager.CreateAsync(new IdentityRole
+                {
+                    Name = roleName
+                });
+            }
+        }
+        #endregion
+
+        #region sign
+        public async Task<SignInResult> LoginAsync(LoginViewModel model)
+        {
+            return await _signInManager.PasswordSignInAsync(
+                model.Username,
+                model.Password,
+                model.RememberMe,
+                false);
+        }
+
+        public async Task LogoutAsync()
+        {
+            await _signInManager.SignOutAsync();
+        }
+
         public async Task<SignInResult> ValidatePasswordAsync(User user, string password)
         {
-                return await _signInManager.CheckPasswordSignInAsync(
-    	          user,
-    	          password,
-    	          false);
-
+            return await _signInManager.CheckPasswordSignInAsync(
+              user,
+              password,
+              false);
         }
+        #endregion
+
 
     }
 }

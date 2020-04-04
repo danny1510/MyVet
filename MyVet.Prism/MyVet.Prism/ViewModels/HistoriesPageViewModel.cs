@@ -20,6 +20,7 @@ namespace MyVet.Prism.ViewModels
             Pet = JsonConvert.DeserializeObject<PetResponse>(Settings.Pet);
             LoadHistories();
         }
+
         public PetResponse Pet
         {
             get => _pet;

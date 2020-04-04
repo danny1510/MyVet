@@ -10,15 +10,12 @@
 
 
     <ScrollView>
-
         <StackLayout
             Padding="10">
-
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-
                 <ffimageloading:CachedImage
                      HorizontalOptions="Center"
                      VerticalOptions="Center"
@@ -32,62 +29,51 @@
     	             RetryDelay= "600"
     	             DownsampleToViewSize = "true"
                      HeightRequest="300"/>
-
             </Grid>
-            
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-
                 </Grid.RowDefinitions>
                 <Label
                 FontAttributes="Bold"
                 Grid.Column="0"
                 Grid.Row="0"
                 Text="Name"/>
-
                 <Label
                 Grid.Column="1"
                 Grid.Row="0"
                 Text="{Binding Pet.Name}"/>
-
                 <Label
                 FontAttributes="Bold"
                 Grid.Column="0"
                 Grid.Row="1"
                 Text="Race"/>
-
                 <Label
                 Grid.Column="1"
                 Grid.Row="1"
                 Text="{Binding Pet.Race}"/>
-
                 <Label
                 FontAttributes="Bold"
                 Grid.Column="0"
                 Grid.Row="2"
                 Text="Born"/>
-
                 <Label
                 Grid.Column="1"
                 Grid.Row="2"
                 Text="{Binding Pet.Born,StringFormat='{0:yyyy/MM/dd}'}"/>
                 <Label
-
                 FontAttributes="Bold"
                 Grid.Column="0"
                 Grid.Row="3"
                 Text="Pet Type"/>
-
                 <Label
                 Grid.Column="1"
                 Grid.Row="3"
@@ -97,16 +83,12 @@
                 Grid.Column="0"
                 Grid.Row="4"
                 Text="Remarks"/>
-
                 <Label
                 Grid.Column="1"
                 Grid.Row="4"
                 Text="{Binding Pet.Remarks}"/>
             </Grid>
-
-
         </StackLayout>
-
     </ScrollView>
     
   
