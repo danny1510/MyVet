@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyVet.Common", "MyVet.Commo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyVet.Web", "MyVet.Web\MyVet.Web.csproj", "{8A6FF0D0-8454-4B27-9135-59A9035AFEB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyVet.Prism", "MyVet.Prism\MyVet.Prism\MyVet.Prism.csproj", "{64C56B90-3932-4FBD-A6D5-2D0B0875050E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyVet.Prism", "MyVet.Prism\MyVet.Prism\MyVet.Prism.csproj", "{64C56B90-3932-4FBD-A6D5-2D0B0875050E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyVet.Prism.Android", "MyVet.Prism\MyVet.Prism.Android\MyVet.Prism.Android.csproj", "{59272C7F-2DDA-48B6-A06E-0B0BAD579E73}"
 EndProject

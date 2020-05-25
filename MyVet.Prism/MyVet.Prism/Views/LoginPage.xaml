@@ -50,7 +50,6 @@
                     AbsoluteLayout.LayoutBounds=".5,.5,.5,.5"
                 	BackgroundColor="Black"
                 	HorizontalOptions="Center"
-                	Style=""
                 	VerticalOptions="Center"/> 
                
             <!--<busyindicator:SfBusyIndicator  
