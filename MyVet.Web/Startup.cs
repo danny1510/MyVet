@@ -80,17 +80,18 @@ namespace MyVet.Web
             });
 
 
-            //--------------Inteccion de Clases
+            //--------------Inyeccion de Clases
             //AddTransient Solo la inyecta una vez y la borra
             services.AddTransient<SeedDb>();
             //AddScoped Lo inyecta todas la veces que se llame pero crea una nueva instacia, Nuevo objeto
             services.AddScoped<IUserHelper, UserHelper>();
             //AddSingleton Lo inyecta una vez pero lo deja vivo en el ciclo de vida de ejecucion del proyecto
             // services.AddSingleton<UserHelper>();
-            services.AddScoped<ICombosHelper, CombosHelper>();
-            services.AddScoped<IConverterHelper, ConverterHelper>();
-            services.AddScoped<IImageHelper, ImageHelper>();
-            services.AddScoped<IMailHelper, MailHelper>();
+            services.AddScoped<ICombosHelper,     CombosHelper>();
+            services.AddScoped<IConverterHelper,  ConverterHelper>();
+            services.AddScoped<IImageHelper,      ImageHelper>();
+            services.AddScoped<IMailHelper,       MailHelper>();
+            services.AddScoped<IAgendaHelper,     AgendaHelper>();
 
 
 
