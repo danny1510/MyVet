@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MyVet.Common.Models
+namespace MyVet.Web.Models
 {
-    public class EmailRequest
+    public class RecoverPasswordViewModel
     {
         [Required]
         [EmailAddress]
         public string Email { get; set; }
-
     }
 }
