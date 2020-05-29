@@ -1,11 +1,10 @@
-﻿using MyVet.Common.Models;
+﻿using MyVet.Common.Helpers;
+using MyVet.Common.Models;
 using MyVet.Common.Services;
+using Newtonsoft.Json;
 using Prism.Commands;
-using Prism.Mvvm;
 using Prism.Navigation;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace MyVet.Prism.ViewModels
 {
@@ -20,37 +19,38 @@ namespace MyVet.Prism.ViewModels
          *****/
 
         private string _Password;
-        private bool _IsRuuning ;
+        private bool _IsRuuning;
         private bool _IsEnabled;
-        private DelegateCommand _LoginComand;
+        private DelegateCommand _loginComand;
+        private DelegateCommand _registerComand;
+        private DelegateCommand _forgotPasswordCommand;
         private readonly INavigationService _navigationService;
         private readonly IApiService _apiService;
 
         public LoginPageViewModel(
             INavigationService navigationService,
-            IApiService apiService): base(navigationService)
+            IApiService apiService) : base(navigationService)
         {
             _navigationService = navigationService;
             _apiService = apiService;
             Title = "Login";
-            _IsEnabled = true;
+            IsEnable = true;
+            IsRemember = true;
 
-            //TODO:Delete this lineas
-            Email="valenm@gmail.com";
-            Password = "123456";
         }
-
 
         public string Email { get; set; }
 
-        public string Password { 
-            get=>_Password;
-            set=>SetProperty(ref _Password,value) ; 
+        public string Password
+        {
+            get => _Password;
+            set => SetProperty(ref _Password, value);
         }
 
-        public bool IsRunning {
-            get=>_IsRuuning; 
-            set=>SetProperty(ref _IsRuuning, value); 
+        public bool IsRunning
+        {
+            get => _IsRuuning;
+            set => SetProperty(ref _IsRuuning, value);
         }
 
 
@@ -61,14 +61,22 @@ namespace MyVet.Prism.ViewModels
         }
 
         public DelegateCommand LoginComand =>
-            _LoginComand ?? (_LoginComand = new DelegateCommand(Login));
+            _loginComand ?? (_loginComand = new DelegateCommand(LoginAsync));
 
+        public DelegateCommand RegisterComand =>
+       _registerComand ?? (_registerComand = new DelegateCommand(RegisterAsync));
+        public DelegateCommand ForgotPasswordCommand =>
+        _forgotPasswordCommand ?? (_forgotPasswordCommand = new DelegateCommand(ForgotPasswordAsync));
 
-        private async void Login() {
+       
+        public bool IsRemember { get; set; }
+
+        private async void LoginAsync()
+        {
 
             if (string.IsNullOrEmpty(Email))
             {
-                await App.Current.MainPage.DisplayAlert("Error","You must enter an email","Accept");
+                await App.Current.MainPage.DisplayAlert("Error", "You must enter an email", "Accept");
                 return;
             }
 
@@ -119,26 +127,41 @@ namespace MyVet.Prism.ViewModels
             {
                 IsEnable = true;
                 IsRunning = false;
-                await App.Current.MainPage.DisplayAlert("Error", $"{response2.Message}"+". This user have a big problem,call support", "Accept");
+                await App.Current.MainPage.DisplayAlert("Error", $"{response2.Message}" + ". This user have a big problem,call support", "Accept");
                 Password = string.Empty;
                 return;
             }
 
             var owner = response2.Result;
-            var parameters = new NavigationParameters
-            {
-                { "owner", owner }
-            };
 
-            await _navigationService.NavigateAsync("PetsPage", parameters);
+            Settings.Owner = JsonConvert.SerializeObject(owner);
+            Settings.Token = JsonConvert.SerializeObject(token);
+
+
+            //var parameters = new NavigationParameters
+            //{
+            //    { "owner", owner }
+            //};
+
+            await _navigationService.NavigateAsync("/VeterinaryMasterDetailPage/NavigationPage/PetsPage");
+
+            Password = string.Empty;
             IsEnable = true;
             IsRunning = false;
-            Password = string.Empty;
+
 
         }
 
 
+        private async void RegisterAsync()
+        {
+            await _navigationService.NavigateAsync("RegisterPage");
+        }
 
+        private async void ForgotPasswordAsync()
+        {
+            await _navigationService.NavigateAsync("RememberPasswordPage");
+        }
 
 
 

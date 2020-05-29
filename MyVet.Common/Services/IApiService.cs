@@ -21,6 +21,20 @@ namespace MyVet.Common.Services
 
         Task<bool> CheckConnection(string url);
 
+        Task<Response<object>> RegisterUserAsync(
+            string urlBase,
+            string servicePrefix,
+            string controller,
+            UserRequest userRequest);
+
+        Task<Response<object>> RecoverPasswordAsync(
+            string urlBase,
+            string servicePrefix,
+            string controller,
+            EmailRequest emailRequest);
+
+
+
 
     }
 }

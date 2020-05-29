@@ -2,9 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
-             xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="MyVet.Prism.Views.LoginPage"
+             BackgroundColor="{StaticResource colorBackgroud}"
              Title="{Binding Title}">
 
     <ScrollView>
@@ -15,7 +15,7 @@
             	AbsoluteLayout.LayoutFlags="All"
                 Padding="10">
                 <Image
-                    HeightRequest="230"
+                    HeightRequest="180"
                     Source="logo.png"/>
 
                 <Label Text="Email"></Label>
@@ -29,29 +29,55 @@
                 <Entry
                     IsPassword="true"
                     Placeholder="Enter your password"
-                    Text="{Binding Password}">
-                </Entry>
+                    Text="{Binding Password}"/>
 
-                <Button
-                    BorderRadius="23"
-                    BackgroundColor="Navy"
+                <StackLayout
+	                HorizontalOptions="Center"
+	                Orientation="Horizontal">
+                    <Label
+    	                Text="Remember me in this device"
+                        VerticalOptions="Center"/>
+                    <CheckBox
+    	                IsChecked="{Binding IsRemember}"/>
+                </StackLayout>
+                <Label
+	                HorizontalOptions="Center"
+	                Text="Forgot your password?"
+	                TextColor="{StaticResource colorAccent}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
+
+
+                <StackLayout
+                    Orientation="Horizontal"
+                    VerticalOptions="EndAndExpand" >
+
+                <Button                
                     Command="{Binding LoginComand}"
-                    HeightRequest="46"
                     IsEnabled="{Binding IsEnable}"
-                    Text="Login"
-                    TextColor="White"
-                    VerticalOptions="EndAndExpand">
+                    Text="Login" >
                 </Button>
+                <Button                
+                    Command="{Binding RegisterComand}"
+                    IsEnabled="{Binding IsEnable}"
+                    Style="{StaticResource SecondaryButton}"
+                    Text="Register" />
+                    
+                </StackLayout>
             </StackLayout>
 
             <ActivityIndicator
                     IsRunning="{Binding IsRunning}"
                 	AbsoluteLayout.LayoutFlags="All"
                     AbsoluteLayout.LayoutBounds=".5,.5,.5,.5"
-                	BackgroundColor="Black"
                 	HorizontalOptions="Center"
-                	VerticalOptions="Center"/> 
-               
+                    Color = "{StaticResource colorDanger}"
+                    Scale= "1.3"
+                    BackgroundColor = "Transparent"
+                	VerticalOptions="Center"/>
+
             <!--<busyindicator:SfBusyIndicator  
                 	AnimationType="HorizontalPulsingBox"
                 	AbsoluteLayout.LayoutBounds=".5,.5,.5,.5"
@@ -66,10 +92,10 @@
                 	ViewBoxHeight="80" />-->
 
 
+
         </AbsoluteLayout>
-        
     </ScrollView>
 
-       
+
 
 </ContentPage>
