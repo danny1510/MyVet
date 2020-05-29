@@ -28,6 +28,7 @@
                     <Entry
                     	Grid.Row="0"
                     	Grid.Column="1"
+                        Keyboard="Numeric"
                     	Placeholder="Enter your document..."
                     	Text="{Binding Document}"/>
 

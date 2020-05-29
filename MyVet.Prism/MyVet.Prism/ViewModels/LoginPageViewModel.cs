@@ -134,8 +134,9 @@ namespace MyVet.Prism.ViewModels
 
             var owner = response2.Result;
 
-            Settings.Owner = JsonConvert.SerializeObject(owner);
-            Settings.Token = JsonConvert.SerializeObject(token);
+            Settings.Owner        = JsonConvert.SerializeObject(owner);
+            Settings.Token        = JsonConvert.SerializeObject(token);
+            Settings.IsRemembered = IsRemember;
 
 
             //var parameters = new NavigationParameters

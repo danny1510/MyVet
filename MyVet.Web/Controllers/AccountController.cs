@@ -311,6 +311,7 @@ namespace MyVet.Web.Controllers
             return View(model);
         }
 
+        [HttpGet]
         public IActionResult ChangePassword()
         {
             return View();

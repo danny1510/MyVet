@@ -33,6 +33,28 @@ namespace MyVet.Common.Services
             string controller,
             EmailRequest emailRequest);
 
+        Task<Response<object>>PutAsync<T>(
+           string urlBase,
+           string servicePrefix,
+           string controller,
+           T model,
+           string tokenType,
+           string accessToken);
+
+        Task<Response<object>> ChangePasswordAsync(
+            string urlBase,
+            string servicePrefix,
+            string controller,
+            ChangePasswordRequest changePasswordRequest,
+            string tokenType,
+            string accessToken);
+
+
+
+
+
+
+
 
 
 
