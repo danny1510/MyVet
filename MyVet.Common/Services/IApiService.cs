@@ -33,7 +33,7 @@ namespace MyVet.Common.Services
             string controller,
             EmailRequest emailRequest);
 
-        Task<Response<object>>PutAsync<T>(
+        Task<Response<object>> PutAsync<T>(
            string urlBase,
            string servicePrefix,
            string controller,
@@ -49,6 +49,12 @@ namespace MyVet.Common.Services
             string tokenType,
             string accessToken);
 
+        Task<Response<object>> GetListAsync<T>(
+            string urlBase,
+            string servicePrefix,
+            string controller,
+            string tokenType,
+            string accessToken);
 
 
 

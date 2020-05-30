@@ -2,9 +2,6 @@
 using MyVet.Web.Data;
 using MyVet.Web.Data.Entities;
 using MyVet.Web.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MyVet.Web.Helper
@@ -53,12 +50,12 @@ namespace MyVet.Web.Helper
 
         public async Task<Pet> ToPetAsync(PetViewModel model, string path)
         {
-         return new Pet
+            return new Pet
             {
                 Agendas = model.Agendas,
                 Born = model.Born,
                 Histories = model.Histories,
-                Id= (model.Id!=0) ? model.Id :0,
+                Id = (model.Id != 0) ? model.Id : 0,
                 ImageUrl = path,
                 Name = model.Name,
                 Owner = await _dataContext.Owners.FindAsync(model.OwnerId),
@@ -66,7 +63,7 @@ namespace MyVet.Web.Helper
                 Race = model.Race,
                 Remarks = model.Remarks
             };
-         
+
         }
 
         public PetViewModel ToPetViewModel(Pet pet)

@@ -1,15 +1,10 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
-using Prism.Navigation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Prism.Navigation;
 
 namespace MyVet.Prism.ViewModels
 {
     public class AgendaPageViewModel : ViewModelBase
     {
-        public AgendaPageViewModel(INavigationService navigationService): base(navigationService)
+        public AgendaPageViewModel(INavigationService navigationService) : base(navigationService)
         {
             Title = "Agenda";
         }

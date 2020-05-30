@@ -9,10 +9,10 @@
              BackgroundColor="{StaticResource colorBackgroud}"
              Title="{Binding Title}">
 
-
-    <ScrollView>
-        <StackLayout
-            Padding="10">
+    <StackLayout
+        Padding="10">
+        <ScrollView>
+        <StackLayout>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -90,7 +90,12 @@
                 Text="{Binding Pet.Remarks}"/>
             </Grid>
         </StackLayout>
-    </ScrollView>
-    
-  
+     </ScrollView>
+
+        <Button
+            Command="{Binding EditPetCommand}"
+            Text="Edit Pet"
+            VerticalOptions="EndAndExpand"/>
+    </StackLayout>
+
 </ContentPage>
