@@ -17,6 +17,7 @@
                    AbsoluteLayout.LayoutFlags="All">
 
                     <Image
+                       HeightRequest="150"
                        Aspect="AspectFit"           	      
             	       Source="{Binding ImageSource}">
                         <Image.GestureRecognizers>

@@ -2,6 +2,8 @@
 using MyVet.Common.Models;
 using MyVet.Common.Services;
 using Newtonsoft.Json;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -24,6 +26,9 @@ namespace MyVet.Prism.ViewModels
         private bool _isEdit;
         private ObservableCollection<PetTypeResponse> _petTypes;
         private PetTypeResponse _petType;
+        private MediaFile _file;
+        private DelegateCommand _changeImageCommand;
+
 
         public EditPetViewModel(INavigationService navigationService,
             IApiService apiService) : base(navigationService)
@@ -33,6 +38,10 @@ namespace MyVet.Prism.ViewModels
             _apiService = apiService;
         }
 
+        public DelegateCommand ChangeImageCommand => _changeImageCommand ?? 
+            (_changeImageCommand = new DelegateCommand(ChangeImageAsync));
+
+   
         public ObservableCollection<PetTypeResponse> PetTypes
         {
             get => _petTypes;
@@ -145,21 +154,59 @@ namespace MyVet.Prism.ViewModels
             }
         }
 
+        private async void ChangeImageAsync()
+        {
+            await CrossMedia.Current.Initialize();
+
+            ////Verifica se a camera está disponible
+            //if (!CrossMedia.Current.IsTakePhotoSupported || !CrossMedia.Current.IsCameraAvailable)
+            //{
+            //    await App.Current.MainPage.DisplayAlert("Aviso", "Ninguna camera detectada", "OK");
+
+            //    return;
+            //}
+
+            var source = await Application.Current.MainPage.DisplayActionSheet(
+               "Where do you want to get the picture from?",
+               "Cancel",
+                null,
+                "Gallery",
+                "Camera");
+
+            if (source == "Cancel")
+            {
+                _file = null;
+                return;
+            }
+
+            if (source == "Camera")
+            {
+                _file = await CrossMedia.Current.TakePhotoAsync(
+                    new StoreCameraMediaOptions
+                    {
+                        Directory = "Sample",
+                        Name = "test.jpg",
+                        PhotoSize = PhotoSize.Small,
+                    }
+                );
+            }
+            else
+            {
+                _file = await CrossMedia.Current.PickPhotoAsync();
+            }
+
+            if (_file != null)
+            {
+                ImageSource = ImageSource.FromStream(() =>
+                {
+                    var stream = _file.GetStream();
+                    return stream;
+                });
+            }
+        }
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+        }
     }
-}
